@@ -1,0 +1,15 @@
+{
+    "name": "cleverson-unitop/gestao_escolar",
+    "autoload": {
+        "psr-4": {
+            "CleversonUnitop\\GestaoEscolar\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Cleverson",
+            "email": "felipecleverson1@gmail.com"
+        }
+    ],
+    "require": {}
+}
