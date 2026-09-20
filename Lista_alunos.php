@@ -1,5 +1,7 @@
 <?php
 
+use CleversonUnitop\GestaoEscolar\Domain\model\Student;
+
 
 require_once 'vendor/autoload.php';
 
@@ -8,6 +10,8 @@ $pdo = new PDO(dsn: 'sqlite:' . $databasePath);
 
 
 $statement = $pdo->query('SELECT * FROM students');
-$studentList = $statement->fetchAll();
+$studentList = $statement->fetchAll(PDO::FETCH_CLASS, Student::class);
 
-echo $studentList[0][0];
+var_dump($studentList);
+
+// echo $studentList[0][0];
