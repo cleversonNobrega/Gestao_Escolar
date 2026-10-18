@@ -1,10 +1,15 @@
 <?php
 
+namespace CleversonUnitop\GestaoEscolar\Infrastructure\Persistence;
+
+use PDO;
+
 class ConnectionCreator
 {
-    public function createConnection(): \PDO
+    public static function createConnection(): PDO
     {
-        $databasePath = __DIR__ . '/../../banco.sqlite';
-        return new PDO(dsn: 'sqlite:' . $databasePath);
+        $databasePath = __DIR__ . '/../../../banco.sqlite';
+
+        return new PDO('sqlite:' . $databasePath);
     }
 }

@@ -1,21 +1,25 @@
 <?php
 
 use CleversonUnitop\GestaoEscolar\Domain\model\Student;
-use ConnectionCreator;
+use CleversonUnitop\GestaoEscolar\Infrastructure\Persistence\ConnectionCreator;
+
 
 require_once 'vendor/autoload.php';
 
-$pdo = (new ConnectionCreator())->createConnection();
+$pdo = ConnectionCreator::createConnection();
 
-$student = new Student(null, 'Patricia freitas', new \DateTimeImmutable('2007-01-07'));
+$student = new Student(
+    null,
+    "Patricia Freitas",
+    new \DateTimeImmutable('1986-10-25')
+);
+$name = $student->name();
 
-$sqlInsert = "INSERT INTO Students (name, birth_date) VALUES(:name, :birth_date)";
+$sqlInsert = "INSERT INTO students (name, birth_date) VALUES (:name, :birth_date);";
 $statement = $pdo->prepare($sqlInsert);
-$statement->bindValue('name', $student->name());
-$statement->bindValue('birth_date', $student->birthDate()->format('Y-m-d'));
-$statement->execute();
-
+$statement->bindParam(':name', $name);
+$statement->bindValue(':birth_date', $student->birthDate()->format('Y-m-d'));
 
 if ($statement->execute()) {
-    echo "Aluno incluido";
+    echo "Aluno incluído";
 }
