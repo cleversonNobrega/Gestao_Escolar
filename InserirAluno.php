@@ -1,11 +1,11 @@
 <?php
 
 use CleversonUnitop\GestaoEscolar\Domain\model\Student;
+use ConnectionCreator;
 
 require_once 'vendor/autoload.php';
 
-$databasePath = __DIR__ . '/banco.sqlite';
-$pdo = new PDO(dsn: 'sqlite:' . $databasePath);
+$pdo = (new ConnectionCreator())->createConnection();
 
 $student = new Student(null, 'Patricia freitas', new \DateTimeImmutable('2007-01-07'));
 

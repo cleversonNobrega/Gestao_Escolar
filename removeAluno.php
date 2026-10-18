@@ -1,9 +1,10 @@
 <?php
 
+use ConnectionCreator;
+
 require_once 'vendor/autoload.php';
 
-$databasePath = __DIR__ . '/banco.sqlite';
-$pdo = new PDO(dsn: 'sqlite:' . $databasePath);
+$pdo = (new ConnectionCreator())->createConnection();
 
 $prepareStatement = $pdo->prepare("DELETE FROM students WHERE id = ?");
 $prepareStatement->bindValue(1, 4, PDO::PARAM_INT);
