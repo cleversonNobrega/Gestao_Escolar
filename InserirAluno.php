@@ -3,7 +3,6 @@
 use CleversonUnitop\GestaoEscolar\Domain\model\Student;
 use CleversonUnitop\GestaoEscolar\Infrastructure\Persistence\ConnectionCreator;
 
-
 require_once 'vendor/autoload.php';
 
 $pdo = ConnectionCreator::createConnection();

@@ -1,9 +1,9 @@
 <?php
 
-namespace Alura\Pdo\Infrastructure\Repository;
+namespace CleversonUnitop\GestaoEscolar\Infrastructure\Repository;
 
-use Alura\Pdo\Domain\Model\Student;
-use Alura\Pdo\Domain\Repository\StudentRepository;
+use CleversonUnitop\GestaoEscolar\Domain\model\Student;
+use CleversonUnitop\GestaoEscolar\Domain\Repository\StudentRepository;
 use PDO;
 
 class PdoStudentRepository implements StudentRepository
