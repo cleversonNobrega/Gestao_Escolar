@@ -2,6 +2,7 @@
 
 namespace CleversonUnitop\GestaoEscolar\Infrastructure\Repository;
 
+use CleversonUnitop\GestaoEscolar\Domain\model\Phone;
 use CleversonUnitop\GestaoEscolar\Domain\model\Student;
 use CleversonUnitop\GestaoEscolar\Domain\Repository\StudentRepository;
 use PDO;
@@ -39,14 +40,36 @@ class PdoStudentRepository implements StudentRepository
         $studentList = [];
 
         foreach ($studentDataList as $studentData) {
-            $studentList[] = new Student(
+            $student = new Student(
                 $studentData['id'],
                 $studentData['name'],
                 new \DateTimeImmutable($studentData['birth_date'])
             );
+
+            $this->fillPhonesOf($student);
+
+            $studentList[] = $student;
         }
 
         return $studentList;
+    }
+
+    public function fillPhonesOf(Student $student): void
+    {
+        $sqlQuery = 'SELECT id, area_code, number FROM phones WHERE student_id = ?';
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(1, $student->id(), PDO::PARAM_INT);
+
+        $phoneDataList = $stmt->fetchAll();
+        foreach ($phoneDataList as $phoneData) {
+            $phone = new Phone(
+                $phoneData['id'],
+                $phoneData['area_code'],
+                $phoneData['number']
+            );
+
+            $student->addPhone($phone);
+        }
     }
 
     public function save(Student $student): bool

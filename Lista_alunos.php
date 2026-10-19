@@ -1,19 +1,12 @@
 <?php
 
-use CleversonUnitop\GestaoEscolar\Domain\model\Student;
+use CleversonUnitop\GestaoEscolar\Infrastructure\Persistence\ConnectionCreator;
+use CleversonUnitop\GestaoEscolar\Infrastructure\Repository\PdoStudentRepository;
 
 require_once 'vendor/autoload.php';
 
-$databasePath = __DIR__ . '/banco.sqlite';
-$pdo = new PDO(dsn: 'sqlite:' . $databasePath);
-
-$statement = $pdo->query('SELECT * FROM students');
-
-$studentList = $statement->fetchAll(PDO::FETCH_ASSOC);
-$students = [];
-
-foreach ($studentList as $studentData) {
-    $studentList[] = new Student($studentData['id'], $studentData['name'], new DateTimeImmutable($studentData['birth_date']));
-}
+$pdo = ConnectionCreator::createConnection();
+$repository = new PdoStudentRepository($pdo);
+$studentList = $repository->allStudents();
 
 var_dump($studentList);
